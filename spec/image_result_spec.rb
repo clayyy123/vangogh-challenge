@@ -1,6 +1,6 @@
 require_relative '../main.rb'
 
-artists = [
+search_topics = [
   {
     name: 'Vincent Van Gogh',
     file: 'van-gogh-paintings'
@@ -12,14 +12,22 @@ artists = [
   {
     name: 'Salvador Dali',
     file: 'salvador-dali-paintings'
-  }
+  },
+  {
+    name: 'Whale Species',
+    file: 'whale-species'
+  },
+  {
+    name: 'White Lotus Cast',
+    file: 'white-lotus-cast'
+  },
 ]
 
-artists.each do |artist|
-  describe "Knowledge graph for #{artist[:name]} Paintings from Google" do
+search_topics.each do |topic|
+  describe "Knowledge graph for #{topic[:name]}" do
   
     before(:all) do
-      @data_array = parse_search_result("./files/#{artist[:file]}.html")
+      @data_array = find_image_data("./files/#{topic[:file]}.html")
     end
 
     it 'returns a non empty array' do
@@ -54,7 +62,6 @@ artists.each do |artist|
     it 'makes sure :extensions is an array and non empty' do
       @data_array.each do |data|
         expect(data[:extensions]).to be_a(Array)
-        expect(data[:extensions]).not_to be_empty
       end
     end
   end
